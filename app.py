@@ -76,21 +76,26 @@ def display_shift_data():
     num_users = int(request.form['num_users'])
     user_data = []
 
-    for i in range(num_users):
-        company_id = request.form[f'company_id_{i}']
-        username = request.form[f'username_{i}']
-        password = request.form[f'password_{i}']
+    try:
+        for i in range(num_users):
+            company_id = request.form[f'company_id_{i}']
+            username = request.form[f'username_{i}']
+            password = request.form[f'password_{i}']
 
-        shift_data, shift_data_of_the_current_week, user_name, company_name = get_shift_data(company_id, username, password)
+            shift_data, shift_data_of_the_current_week, user_name, company_name = get_shift_data(company_id, username, password)
 
-        user_data.append({
-            'user_name': user_name,
-            'company_name': company_name,
-            'shift_data': shift_data,
-            'shift_data_of_the_current_week': shift_data_of_the_current_week,
-        })
+            user_data.append({
+                'user_name': user_name,
+                'company_name': company_name,
+                'shift_data': shift_data,
+                'shift_data_of_the_current_week': shift_data_of_the_current_week,
+            })
 
-    return render_template('display_shift_data.html', user_data=user_data)
+        return render_template('display_shift_data.html', user_data=user_data)
+    except Exception as e:
+        app.logger.error(f'Error processing request: {e}')
+        return render_template('error.html', error=str(e)), 500
+
 
 @app.route('/about')
 def about():
