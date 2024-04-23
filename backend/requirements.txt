@@ -8,7 +8,7 @@ colorama==0.4.6
 distlib==0.3.8
 filelock==3.13.3
 Flask==3.0.3
-gunicorn==21.2.0
+Gunicorn
 h11==0.14.0
 idna==3.6
 itsdangerous==2.1.2
