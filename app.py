@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import time
 
 app = Flask(__name__)
@@ -12,8 +13,15 @@ def get_shift_data(company_id, username, password):
     login_url = "https://app.shiftorganizer.com/login/"
     home_url = "https://app.shiftorganizer.com/app/home"
 
-    # Set up the Selenium WebDriver (make sure to download the appropriate WebDriver for your browser)
-    driver = webdriver.Chrome()  # You may need to specify the path to your chromedriver.exe
+    # Set up the Selenium WebDriver options for headless execution
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")  # Bypass OS security model, necessary on certain systems
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+    chrome_options.add_argument("--disable-gpu")  # Applicable for headless mode only
+
+    # Initialize WebDriver with options
+    driver = webdriver.Chrome(options=chrome_options)  # You may need to specify the path to your chromedriver.exe
 
     try:
         # Perform login using Selenium
@@ -39,7 +47,6 @@ def get_shift_data(company_id, username, password):
         panel_body_element_of_the_current_week = driver.find_element(By.CLASS_NAME, 'panel')
         shift_data_of_the_current_week = panel_body_element_of_the_current_week.get_attribute('outerHTML')
 
-
         # Get the content using Selenium of the second 'panel'
         panel_elements = driver.find_elements(By.CLASS_NAME, 'panel')
 
@@ -47,9 +54,6 @@ def get_shift_data(company_id, username, password):
             shift_data = panel_elements[1].get_attribute('outerHTML')
         else:
             shift_data = "No second 'panel' found on the page"
-
-        
-
 
         # Get the user name and company name separately
         user_name_element = driver.find_element(By.CSS_SELECTOR, '.pull-left.flip.text-left')
@@ -77,7 +81,7 @@ def display_shift_data():
         username = request.form[f'username_{i}']
         password = request.form[f'password_{i}']
 
-        shift_data,shift_data_of_the_current_week, user_name, company_name = get_shift_data(company_id, username, password)
+        shift_data, shift_data_of_the_current_week, user_name, company_name = get_shift_data(company_id, username, password)
 
         user_data.append({
             'user_name': user_name,
@@ -91,5 +95,6 @@ def display_shift_data():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
