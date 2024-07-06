@@ -1,0 +1,49 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/Header.css';
+
+const Header = () => {
+  const [showHeader, setShowHeader] = useState(true);
+  let lastScrollY = window.scrollY;
+
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY <= 0 || currentScrollY < lastScrollY) {
+      setShowHeader(true);
+    } else {
+      setShowHeader(false);
+    }
+    lastScrollY = currentScrollY;
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return (
+    <nav className={`navbar navbar-dark bg-dark ${showHeader ? 'navbar-visible' : 'navbar-hidden'}`}>
+      <div className="container">
+        <div className="d-flex align-items-center justify-content-between">
+          <h1 className="mb-0 logo">Synchronizer</h1>
+          <Link to="/">
+            <img
+              src="https://www.shiftorganizer.com/wp-content/uploads/2017/03/logo.png"
+              alt="ShiftOrganizer"
+              height="35"
+              className="logo-img"
+            />
+          </Link>
+          <div className="nav-links">
+            <Link to="/" className="nav-link">Home</Link>
+            <Link to="/about" className="nav-link">About</Link>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Header;

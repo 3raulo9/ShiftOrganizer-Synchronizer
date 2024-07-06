@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -7,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins for simplicity
 
 # Function to log in and retrieve shift data using Selenium
 def get_shift_data(company_id, username, password):
@@ -49,21 +51,17 @@ def get_shift_data(company_id, username, password):
 
     return shift_data, shift_data_of_the_current_week, user_name, company_name
 
-@app.route('/')
-def interactive_form():
-    num_users = request.args.get('num_users', default=1, type=int)
-    return render_template('interactive_form.html', num_users=num_users)
-
 @app.route('/display_shift_data', methods=['POST'])
 def display_shift_data():
-    num_users = int(request.form['num_users'])
+    data = request.get_json()
+    num_users = int(data['num_users'])
     user_data = []
 
     try:
         for i in range(num_users):
-            company_id = request.form[f'company_id_{i}']
-            username = request.form[f'username_{i}']
-            password = request.form[f'password_{i}']
+            company_id = data[f'company_id_{i}']
+            username = data[f'username_{i}']
+            password = data[f'password_{i}']
 
             shift_data, shift_data_of_the_current_week, user_name, company_name = get_shift_data(company_id, username, password)
 
@@ -74,14 +72,14 @@ def display_shift_data():
                 'shift_data_of_the_current_week': shift_data_of_the_current_week,
             })
 
-        return render_template('display_shift_data.html', user_data=user_data)
+        return jsonify(user_data=user_data)
     except Exception as e:
         app.logger.error(f'Error processing request: {e}')
-        return render_template('error.html', error=str(e)), 500
+        return jsonify(error=str(e)), 500
 
 @app.route('/about')
 def about():
     return render_template('about.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
