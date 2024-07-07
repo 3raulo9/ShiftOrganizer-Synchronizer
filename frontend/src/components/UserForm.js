@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/UserForm.css';
 
-const UserForm = ({ numUsers, setNumUsers, handleSubmit }) => {
+const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
   const [formFields, setFormFields] = useState([{ company_id: '', username: '', password: '' }]);
 
   const handleInputChange = (index, event) => {
@@ -15,15 +15,24 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit }) => {
     setFormFields([...formFields, { company_id: '', username: '', password: '' }]);
   };
 
-  const onSubmit = (event) => {
+  const handleRemoveFields = (index) => {
+    const values = [...formFields];
+    values.splice(index, 1);
+    setFormFields(values);
+    setNumUsers(numUsers - 1);
+  };
+
+  const onSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);  // Set loading to true when the form is submitted
     const data = { num_users: numUsers };
     formFields.forEach((field, index) => {
       data[`company_id_${index}`] = field.company_id;
       data[`username_${index}`] = field.username;
       data[`password_${index}`] = field.password;
     });
-    handleSubmit(data);
+    await handleSubmit(data);
+    setLoading(false);  // Set loading to false after the form is submitted and data is handled
   };
 
   return (
@@ -71,12 +80,25 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit }) => {
                         className="form-control mb-4"
                         required
                       />
+                      {index !== 0 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFields(index)}
+                          className="btn btn-danger"
+                        >
+                          Delete User
+                        </button>
+                      )}
                     </div>
                   ))}
-                  <button type="button" onClick={handleAddFields} className="btn btn-secondary mb-4">
-                    Add User
-                  </button>
-                  <input type="submit" value="Submit" className="btn btn-primary" />
+                  <div className="btn-container">
+                    <button type="button" onClick={handleAddFields} className="btn btn-success">
+                      Add User
+                    </button>
+                    <input type="submit" value="Submit" className="btn btn-primary" />
+                    <input type="submit" value="Test" className="btn btn-info" />
+
+                  </div>
                 </form>
               </div>
             </div>

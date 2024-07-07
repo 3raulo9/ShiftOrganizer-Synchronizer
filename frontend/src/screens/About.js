@@ -3,7 +3,7 @@ import '../styles/About.css';
 
 const About = () => {
   return (
-    <div className="container about">
+    <div className="container_about">
       <header>
         {/* Add your header content here */}
       </header>

@@ -1,0 +1,17 @@
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px;
+}
+
+.btn-container .btn {
+  width: 150px; /* Fixed width for buttons */
+  padding: 10px; /* Add padding for better appearance */
+  font-size: 14px; /* Adjust font size if needed */
+}
