@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/Header.css';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/Header.css";
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(true);
@@ -17,14 +17,18 @@ const Header = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <nav className={`navbar navbar-dark bg-dark ${showHeader ? 'navbar-visible' : 'navbar-hidden'}`}>
+    <nav
+      className={`navbar navbar-dark bg-dark ${
+        showHeader ? "navbar-visible" : "navbar-hidden"
+      }`}
+    >
       <div className="container">
         <div className="d-flex align-items-center justify-content-between">
           <h1 className="mb-0 logo">Synchronizer</h1>
@@ -36,7 +40,6 @@ const Header = () => {
               className="logo-img"
             />
           </Link>
-
         </div>
       </div>
     </nav>

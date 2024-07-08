@@ -2,7 +2,6 @@
   padding: 20px;
 }
 
-
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -24,4 +23,57 @@ html, body, #root {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.input-container {
+  position: relative;
+  margin: 20px auto;
+  width: 450px; /* Increased the width */
+}
+
+.input-container input[type="text"], .input-container input[type="password"] {
+  font-size: 15px; /* Increased the font size */
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding: 10px 0; /* Increased the padding */
+  background-color: transparent;
+  outline: none;
+}
+
+.input-container .label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #ccc;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  font-size: 16px; /* Increased the font size */
+}
+
+.input-container input[type="text"]:focus ~ .label,
+.input-container input[type="text"]:valid ~ .label,
+.input-container input[type="password"]:focus ~ .label,
+.input-container input[type="password"]:valid ~ .label {
+  top: -25px; /* Adjusted position */
+  font-size: 16px;
+  color: #333;
+}
+
+.input-container .underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #333;
+  transform: scaleX(0);
+  transition: all 0.3s ease;
+}
+
+.input-container input[type="text"]:focus ~ .underline,
+.input-container input[type="text"]:valid ~ .underline,
+.input-container input[type="password"]:focus ~ .underline,
+.input-container input[type="password"]:valid ~ .underline {
+  transform: scaleX(1);
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/UserForm.css';
+import '../styles/App.css';
 
 const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
   const [formFields, setFormFields] = useState([{ company_id: '', username: '', password: '' }]);
@@ -24,7 +25,7 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);  // Set loading to true when the form is submitted
+    setLoading(true);
     const data = { num_users: numUsers };
     formFields.forEach((field, index) => {
       data[`company_id_${index}`] = field.company_id;
@@ -32,7 +33,7 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
       data[`password_${index}`] = field.password;
     });
     await handleSubmit(data);
-    setLoading(false);  // Set loading to false after the form is submitted and data is handled
+    setLoading(false);
   };
 
   return (
@@ -50,36 +51,42 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
                 <form onSubmit={onSubmit}>
                   {formFields.map((field, index) => (
                     <div key={index} className="form-group">
-                      <label htmlFor={`company_id_${index}`}>Company ID:</label>
-                      <input
-                        type="text"
-                        id={`company_id_${index}`}
-                        name="company_id"
-                        value={field.company_id}
-                        onChange={(event) => handleInputChange(index, event)}
-                        className="form-control mb-4"
-                        required
-                      />
-                      <label htmlFor={`username_${index}`}>Username:</label>
-                      <input
-                        type="text"
-                        id={`username_${index}`}
-                        name="username"
-                        value={field.username}
-                        onChange={(event) => handleInputChange(index, event)}
-                        className="form-control mb-4"
-                        required
-                      />
-                      <label htmlFor={`password_${index}`}>Password:</label>
-                      <input
-                        type="password"
-                        id={`password_${index}`}
-                        name="password"
-                        value={field.password}
-                        onChange={(event) => handleInputChange(index, event)}
-                        className="form-control mb-4"
-                        required
-                      />
+                      <div className="input-container">
+                        <input
+                          type="text"
+                          id={`company_id_${index}`}
+                          name="company_id"
+                          value={field.company_id}
+                          onChange={(event) => handleInputChange(index, event)}
+                          required
+                        />
+                        <label htmlFor={`company_id_${index}`} className="label">Company ID</label>
+                        <div className="underline"></div>
+                      </div>
+                      <div className="input-container">
+                        <input
+                          type="text"
+                          id={`username_${index}`}
+                          name="username"
+                          value={field.username}
+                          onChange={(event) => handleInputChange(index, event)}
+                          required
+                        />
+                        <label htmlFor={`username_${index}`} className="label">Username</label>
+                        <div className="underline"></div>
+                      </div>
+                      <div className="input-container">
+                        <input
+                          type="password"
+                          id={`password_${index}`}
+                          name="password"
+                          value={field.password}
+                          onChange={(event) => handleInputChange(index, event)}
+                          required
+                        />
+                        <label htmlFor={`password_${index}`} className="label">Password</label>
+                        <div className="underline"></div>
+                      </div>
                       {index !== 0 && (
                         <button
                           type="button"
@@ -97,7 +104,6 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
                     </button>
                     <input type="submit" value="Submit" className="btn btn-primary" />
                     <input type="submit" value="Test" className="btn btn-info" />
-
                   </div>
                 </form>
               </div>
