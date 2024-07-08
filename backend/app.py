@@ -6,12 +6,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import time
+import threading
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins for simplicity
 
 # Function to log in and retrieve shift data using Selenium
-def get_shift_data(company_id, username, password):
+def get_shift_data(company_id, username, password, result, index):
     login_url = "https://app.shiftorganizer.com/login/"
     home_url = "https://app.shiftorganizer.com/app/home"
 
@@ -49,13 +50,19 @@ def get_shift_data(company_id, username, password):
     finally:
         driver.quit()
 
-    return shift_data, shift_data_of_the_current_week, user_name, company_name
+    result[index] = {
+        'user_name': user_name,
+        'company_name': company_name,
+        'shift_data': shift_data,
+        'shift_data_of_the_current_week': shift_data_of_the_current_week,
+    }
 
 @app.route('/display_shift_data', methods=['POST'])
 def display_shift_data():
     data = request.get_json()
     num_users = int(data['num_users'])
-    user_data = []
+    user_data = [None] * num_users
+    threads = []
 
     try:
         for i in range(num_users):
@@ -63,14 +70,12 @@ def display_shift_data():
             username = data[f'username_{i}']
             password = data[f'password_{i}']
 
-            shift_data, shift_data_of_the_current_week, user_name, company_name = get_shift_data(company_id, username, password)
+            thread = threading.Thread(target=get_shift_data, args=(company_id, username, password, user_data, i))
+            threads.append(thread)
+            thread.start()
 
-            user_data.append({
-                'user_name': user_name,
-                'company_name': company_name,
-                'shift_data': shift_data,
-                'shift_data_of_the_current_week': shift_data_of_the_current_week,
-            })
+        for thread in threads:
+            thread.join()
 
         return jsonify(user_data=user_data)
     except Exception as e:
