@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/UserForm.css';
 import '../styles/App.css';
 
 const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
   const [formFields, setFormFields] = useState([{ company_id: '', username: '', password: '' }]);
+  const navigate = useNavigate();
 
   const handleInputChange = (index, event) => {
     const values = [...formFields];
@@ -34,6 +36,11 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
     });
     await handleSubmit(data);
     setLoading(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
   return (
@@ -104,6 +111,9 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
                     </button>
                     <input type="submit" value="Submit" className="btn btn-primary" />
                     <input type="submit" value="Test" className="btn btn-info" />
+                    <button type="button" onClick={handleLogout} className="btn btn-warning">
+                      Logout
+                    </button>
                   </div>
                 </form>
               </div>
