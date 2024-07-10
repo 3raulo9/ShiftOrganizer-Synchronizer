@@ -28,7 +28,7 @@ const Register = ({ setIsAuthenticated }) => {
     const randomPassword = generateRandomString(12);
     try {
       // Register the test account
-      await axios.post('http://localhost:5000/register', { username: randomUsername, password: randomPassword }, {
+      await axios.post('http://localhost:5000/register', { username: randomUsername, password: randomPassword, is_test_account: true }, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -43,7 +43,7 @@ const Register = ({ setIsAuthenticated }) => {
 
       localStorage.setItem('token', response.data.access_token);
       setIsAuthenticated(true);
-      alert('Test account created and logged in successfully.');
+      alert('Test account created and logged in successfully, be aware that this account will be deleted in 30 minutes.');
       navigate('/');  // Redirect to home page
     } catch (error) {
       console.error('Error creating or logging in test account:', error);
@@ -110,7 +110,7 @@ const Register = ({ setIsAuthenticated }) => {
                     <input type="submit" value="Register" className="btn btn-primary" />
                     <div className="tooltip-container">
                       <button type="button" onClick={createTestAccount} className="btn btn-secondary ml-2">Create Test Account</button>
-                      <span className="tooltip-text">For testing the API</span>
+                      <span className="tooltip-text">For testing the API, The account will be deleted from the database in 30 minutes.</span>
                     </div>
                   </div>
                 </form>

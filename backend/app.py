@@ -8,8 +8,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime, timedelta
 import time
 import threading
+from threading import Thread
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -24,6 +26,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    is_test_account = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 with app.app_context():
     db.create_all()
@@ -34,7 +38,8 @@ def register():
     data = request.get_json()
     username = data['username']
     password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-    new_user = User(username=username, password=password)
+    is_test_account = data.get('is_test_account', False)
+    new_user = User(username=username, password=password, is_test_account=is_test_account)
     db.session.add(new_user)
     db.session.commit()
     return jsonify(message="User registered successfully"), 201
@@ -116,5 +121,17 @@ def display_shift_data():
 def about():
     return render_template('about.html')
 
+def delete_old_test_accounts():
+    while True:
+        with app.app_context():
+            threshold_time = datetime.utcnow() - timedelta(minutes=30)
+            old_test_accounts = User.query.filter(User.is_test_account == True, User.created_at < threshold_time).all()
+            for user in old_test_accounts:
+                db.session.delete(user)
+            db.session.commit()
+        time.sleep(3600)  # Run this check every hour
+
+# Start the background task
 if __name__ == '__main__':
+    Thread(target=delete_old_test_accounts, daemon=True).start()
     app.run(debug=True, port=5000)
