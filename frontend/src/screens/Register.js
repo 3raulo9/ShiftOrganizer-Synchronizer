@@ -14,6 +14,43 @@ const Register = ({ setIsAuthenticated }) => {
     setFormFields(values);
   };
 
+  const generateRandomString = (length) => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  };
+
+  const createTestAccount = async () => {
+    const randomUsername = generateRandomString(8);
+    const randomPassword = generateRandomString(12);
+    try {
+      // Register the test account
+      await axios.post('http://localhost:5000/register', { username: randomUsername, password: randomPassword }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      // Log in the test account
+      const response = await axios.post('http://localhost:5000/login', { username: randomUsername, password: randomPassword }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      localStorage.setItem('token', response.data.access_token);
+      setIsAuthenticated(true);
+      alert('Test account created and logged in successfully.');
+      navigate('/');  // Redirect to home page
+    } catch (error) {
+      console.error('Error creating or logging in test account:', error);
+      alert('Creating or logging in test account failed.');
+    }
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -71,6 +108,10 @@ const Register = ({ setIsAuthenticated }) => {
                   </div>
                   <div className="btn-container">
                     <input type="submit" value="Register" className="btn btn-primary" />
+                    <div className="tooltip-container">
+                      <button type="button" onClick={createTestAccount} className="btn btn-secondary ml-2">Create Test Account</button>
+                      <span className="tooltip-text">For testing the API</span>
+                    </div>
                   </div>
                 </form>
                 <p>Have an account? <span className="link" onClick={() => navigate('/login')}>Login</span></p>
