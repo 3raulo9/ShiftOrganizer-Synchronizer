@@ -10,6 +10,7 @@ import Login from './screens/Login';
 import Loader from './components/Loader'; // Import the Loader component
 import './styles/App.css';
 import './styles/Loader.css';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 function App() {
   const [numUsers, setNumUsers] = useState(1);

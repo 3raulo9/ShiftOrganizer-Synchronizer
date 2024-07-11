@@ -19,17 +19,30 @@ const baseFacts = [
   "Raul's passion for languages extends to helping others learn, often sharing tips and resources with friends and colleagues.",
   "Raul's multilingual abilities enhance his management skills, allowing him to communicate effectively with a diverse team.",
   "As part of his ongoing education, Raul frequently explores new programming frameworks and libraries to stay updated in the tech industry.",
-  "Raul's curiosity about different cultures and languages is reflected in his diverse language portfolio and programming projects."
+  "Raul's curiosity about different cultures and languages is reflected in his diverse language portfolio and programming projects.",
+  "That app was styled using MUI, it is a library of React components that follow Google's Material Design, helping developers quickly build stylish and consistent user interfaces."
+
 ];
 
 const addPrefix = (facts) => facts.map(fact => `About the creator of that website: ${fact}`);
 
 const Loader = () => {
   const [randomFact, setRandomFact] = useState('');
+  const [fade, setFade] = useState(true);
 
   useEffect(() => {
     const facts = addPrefix(baseFacts);
     setRandomFact(facts[Math.floor(Math.random() * facts.length)]);
+
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setRandomFact(facts[Math.floor(Math.random() * facts.length)]);
+        setFade(true);
+      }, 1000); // Duration of the fade-out effect
+    }, 8000); // Switch facts every 8 seconds
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -40,7 +53,7 @@ const Loader = () => {
         <circle strokeLinecap="round" strokeDasharray="0 440" strokeWidth="20" stroke="#000" fill="none" r="70" cy="120" cx="85" className="loader-ring loader-ring-c"></circle>
         <circle strokeLinecap="round" strokeDasharray="0 440" strokeWidth="20" stroke="#000" fill="none" r="70" cy="120" cx="155" className="loader-ring loader-ring-d"></circle>
       </svg>
-      <div className="fun-fact">{randomFact}</div>
+      <div className={`fun-fact ${fade ? 'fade-in' : 'fade-out'}`}>{randomFact}</div>
     </div>
   );
 };

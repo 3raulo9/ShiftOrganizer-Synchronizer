@@ -240,3 +240,17 @@
     opacity: 1;
   }
 }
+
+.fun-fact {
+  margin-top: 20px;
+  font-size: 1.2em;
+  transition: opacity 1s ease-in-out; /* 1s for the transition effect */
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}

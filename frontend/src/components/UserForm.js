@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Typography,
+  Box,
+  IconButton,
+  Slide,
+  Grow
+} from '@mui/material';
+import { Add, Delete, Logout } from '@mui/icons-material';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import '../styles/UserForm.css';
 import '../styles/App.css';
+import '../styles/Animations.css';  // Add your animations CSS here
 
 const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
   const [formFields, setFormFields] = useState([{ company_id: '', username: '', password: '' }]);
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (index, event) => {
@@ -19,10 +35,15 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
   };
 
   const handleRemoveFields = (index) => {
+    setIsDeleting(true);
     const values = [...formFields];
     values.splice(index, 1);
     setFormFields(values);
     setNumUsers(numUsers - 1);
+  };
+
+  const handleAnimationEnd = () => {
+    setIsDeleting(false);
   };
 
   const onSubmit = async (event) => {
@@ -41,87 +62,109 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
+    window.location.reload();
   };
+  
 
   return (
-    <div className="container">
-      <section className="text-center">
-        <div
-          className="p-5 bg-image"
-          style={{ backgroundImage: "url('https://www.shiftorganizer.com/wp-content/uploads/2017/10/Shift_dark.jpg')", height: '300px' }}
-        ></div>
-        <div className="card mx-4 mx-md-5 shadow-5-strong" style={{ marginTop: '-100px', background: 'hsla(0, 0%, 100%, 0.8)', backdropFilter: 'blur(30px)' }}>
-          <div className="card-body py-5 px-md-5">
-            <div className="row d-flex justify-content-center">
-              <div className="col-lg-8">
-                <h2 className="fw-bold mb-5">Enter your users</h2>
-                <form onSubmit={onSubmit}>
+    <Container maxWidth="md">
+      <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+        <Box sx={{ textAlign: 'center', mb: 4, mt: 4 }}>
+          <Typography variant="h2" component="h1" gutterBottom>
+            Enter your users
+          </Typography>
+        </Box>
+      </Slide>
+      <Grow in={true}>
+        <Card sx={{ p: 2, backdropFilter: 'blur(30px)', background: 'rgba(255, 255, 255, 0.8)' }}>
+          <CardContent>
+            <form onSubmit={onSubmit}>
+              <Box display="flex" flexDirection={formFields.length > 1 || isDeleting ? "row" : "column"} flexWrap="wrap" justifyContent="center">
+                <TransitionGroup component={null}>
                   {formFields.map((field, index) => (
-                    <div key={index} className="form-group">
-                      <div className="input-container">
-                        <input
-                          type="text"
-                          id={`company_id_${index}`}
+                    <CSSTransition
+                      key={index}
+                      timeout={500}
+                      classNames="fade"
+                      onExited={handleAnimationEnd}
+                    >
+                      <Box m={1} width={formFields.length > 1 || isDeleting ? "45%" : "100%"}>
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Company ID"
                           name="company_id"
                           value={field.company_id}
                           onChange={(event) => handleInputChange(index, event)}
                           required
+                          sx={{ mb: 2 }}
                         />
-                        <label htmlFor={`company_id_${index}`} className="label">Company ID</label>
-                        <div className="underline"></div>
-                      </div>
-                      <div className="input-container">
-                        <input
-                          type="text"
-                          id={`username_${index}`}
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Username"
                           name="username"
                           value={field.username}
                           onChange={(event) => handleInputChange(index, event)}
                           required
+                          sx={{ mb: 2 }}
                         />
-                        <label htmlFor={`username_${index}`} className="label">Username</label>
-                        <div className="underline"></div>
-                      </div>
-                      <div className="input-container">
-                        <input
-                          type="password"
-                          id={`password_${index}`}
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Password"
                           name="password"
+                          type="password"
                           value={field.password}
                           onChange={(event) => handleInputChange(index, event)}
                           required
+                          sx={{ mb: 2 }}
                         />
-                        <label htmlFor={`password_${index}`} className="label">Password</label>
-                        <div className="underline"></div>
-                      </div>
-                      {index !== 0 && (
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveFields(index)}
-                          className="btn btn-danger"
-                        >
-                          Delete User
-                        </button>
-                      )}
-                    </div>
+                        {index !== 0 && (
+                          <Box textAlign="right">
+                            <IconButton
+                              color="error"
+                              onClick={() => handleRemoveFields(index)}
+                            >
+                              <Delete />
+                            </IconButton>
+                          </Box>
+                        )}
+                      </Box>
+                    </CSSTransition>
                   ))}
-                  <div className="btn-container">
-                    <button type="button" onClick={handleAddFields} className="btn btn-success">
-                      Add User
-                    </button>
-                    <input type="submit" value="Submit" className="btn btn-primary" />
-                    <input type="submit" value="Test" className="btn btn-info" />
-                    <button type="button" onClick={handleLogout} className="btn btn-warning">
-                      Logout
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+                </TransitionGroup>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  startIcon={<Add />}
+                  onClick={handleAddFields}
+                >
+                  Add User
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  startIcon={<Logout />}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </Box>
+            </form>
+          </CardContent>
+        </Card>
+      </Grow>
+    </Container>
   );
 };
 
