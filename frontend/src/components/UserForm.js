@@ -10,7 +10,10 @@ import {
   Box,
   IconButton,
   Slide,
-  Grow
+  Grow,
+  Fab,
+  Icon,
+  Link
 } from '@mui/material';
 import { Add, Delete, Logout } from '@mui/icons-material';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -64,7 +67,6 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
     navigate('/login');
     window.location.reload();
   };
-  
 
   return (
     <Container maxWidth="md">
@@ -136,29 +138,33 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
                 </TransitionGroup>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
-                <Button
-                  variant="contained"
+                <Fab
+                  variant="extended"
                   color="success"
-                  startIcon={<Add />}
                   onClick={handleAddFields}
+                  sx={{ display: 'flex', alignItems: 'center' }}
                 >
                   Add User
-                </Button>
+                  <Add/>
+                </Fab>
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   color="primary"
                   type="submit"
+                  sx={{ display: 'flex', alignItems: 'center' }}
                 >
                   Submit
+                  <Add  />
                 </Button>
-                <Button
-                  variant="contained"
-                  color="warning"
-                  startIcon={<Logout />}
+                <Link
+                  component="button"
+                  variant="body2"
                   onClick={handleLogout}
+                  sx={{ display: 'flex', alignItems: 'center', color: 'red' }}
                 >
                   Logout
-                </Button>
+                  <Logout />
+                </Link>
               </Box>
             </form>
           </CardContent>
