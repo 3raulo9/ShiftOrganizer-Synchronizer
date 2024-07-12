@@ -73,7 +73,7 @@ def get_shift_data(company_id, username, password, result, index):
         WebDriverWait(driver, 10).until(EC.url_contains(home_url.split('/')[-1]))
         driver.get(home_url)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'panel-body')))
-        time.sleep(1.5)
+        time.sleep(5)  # Increased wait time to 5 seconds
         panel_body_element_of_the_current_week = driver.find_element(By.CLASS_NAME, 'panel')
         shift_data_of_the_current_week = panel_body_element_of_the_current_week.get_attribute('outerHTML')
         panel_elements = driver.find_elements(By.CLASS_NAME, 'panel')

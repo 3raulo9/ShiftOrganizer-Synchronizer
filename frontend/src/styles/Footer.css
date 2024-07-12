@@ -5,7 +5,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 80px 20px 20px 20px; /* Add top padding to account for the fixed header */
 
   }
   
