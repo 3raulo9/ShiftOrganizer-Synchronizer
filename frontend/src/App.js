@@ -10,7 +10,6 @@ import Login from './screens/Login';
 import Loader from './components/Loader'; // Import the Loader component
 import './styles/App.css';
 import './styles/Loader.css';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 function App() {
   const [numUsers, setNumUsers] = useState(1);
@@ -47,7 +46,7 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="app">
         {loading ? (
           <div className="loader-container">
             <Loader /> {/* Use the Loader component */}
@@ -55,7 +54,7 @@ function App() {
         ) : (
           <>
             <Header />
-            <div className="content">
+            <div className="content-wrap">
               <Routes>
                 <Route path="/" element={isAuthenticated ? <Home handleSubmit={handleSubmit} userData={userData} numUsers={numUsers} setNumUsers={setNumUsers} setLoading={setLoading} /> : <Navigate to="/login" />} />
                 <Route path="/about" element={<About />} />

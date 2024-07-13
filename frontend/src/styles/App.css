@@ -1,3 +1,4 @@
+/* Existing styles */
 .container {
   padding: 20px;
 }
@@ -17,6 +18,9 @@ html, body, #root {
   flex: 1;
   background-color: #d9d7d7;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .user-cards {
@@ -77,6 +81,7 @@ html, body, #root {
 .input-container input[type="password"]:valid ~ .underline {
   transform: scaleX(1);
 }
+
 .link {
   color: #007bff;
   cursor: pointer;
@@ -84,5 +89,34 @@ html, body, #root {
 }
 
 .link:hover {
+  text-decoration: none;
+}
+
+/* New styles for loader */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Additional footer styles to ensure it stays at the bottom */
+.footer {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer a {
+  color: #343a40;
   text-decoration: none;
 }
