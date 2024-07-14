@@ -44,6 +44,22 @@ function App() {
     }
   };
 
+  const handleTest = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axios.post('http://localhost:5000/display_shift_data_test', {}, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      setUserData(response.data.user_data);
+    } catch (error) {
+      console.error('Error fetching test data:', error);
+    }
+    setLoading(false);
+  };
+
   return (
     <Router>
       <div className="app">
@@ -56,7 +72,7 @@ function App() {
             <Header />
             <div className="content-wrap">
               <Routes>
-                <Route path="/" element={isAuthenticated ? <Home handleSubmit={handleSubmit} userData={userData} numUsers={numUsers} setNumUsers={setNumUsers} setLoading={setLoading} /> : <Navigate to="/login" />} />
+                <Route path="/" element={isAuthenticated ? <Home handleSubmit={handleSubmit} handleTest={handleTest} userData={userData} numUsers={numUsers} setNumUsers={setNumUsers} setLoading={setLoading} /> : <Navigate to="/login" />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/register" element={<Register setIsAuthenticated={setIsAuthenticated} />} />
                 <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Card,
@@ -9,33 +9,60 @@ import {
   TextField,
   Button,
   Box,
-  Link as MuiLink
-} from '@mui/material';
+  Link as MuiLink,
+} from "@mui/material";
 
 const Login = ({ setIsAuthenticated }) => {
-  const [formFields, setFormFields] = useState([{ username: '', password: '' }]);
+  const [formFields, setFormFields] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
-  const handleInputChange = (index, event) => {
-    const values = [...formFields];
-    values[index][event.target.name] = event.target.value;
-    setFormFields(values);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormFields((prevFields) => ({
+      ...prevFields,
+      [name]: value,
+    }));
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/login', formFields[0], {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        formFields,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
-      localStorage.setItem('token', response.data.access_token);
+      );
+      localStorage.setItem("token", response.data.access_token);
       setIsAuthenticated(true);
-      navigate('/');  // Redirect to home page
+      navigate("/"); // Redirect to home page
     } catch (error) {
-      console.error('Error logging in:', error);
-      alert('Login failed.');
+      console.error("Error logging in:", error);
+      alert("Login failed.");
+    }
+  };
+
+  const handleTestLogin = async () => {
+    const testCredentials = { username: "ra12", password: "ra12" };
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        testCredentials,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      localStorage.setItem("token", response.data.access_token);
+      setIsAuthenticated(true);
+      navigate("/"); // Redirect to home page
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Test Login failed.");
     }
   };
 
@@ -47,14 +74,26 @@ const Login = ({ setIsAuthenticated }) => {
         alignItems="center"
         height="100vh"
         style={{
-          backgroundImage: "url('https://www.shiftorganizer.com/wp-content/uploads/2017/10/Shift_dark.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundImage:
+            "url('https://www.shiftorganizer.com/wp-content/uploads/2017/10/Shift_dark.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
-        <Card style={{ width: '100%', maxWidth: '500px', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+        <Card
+          style={{
+            width: "100%",
+            maxWidth: "500px",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+          }}
+        >
           <CardContent>
-            <Typography variant="h4" component="h2" gutterBottom textAlign="center">
+            <Typography
+              variant="h4"
+              component="h2"
+              gutterBottom
+              textAlign="center"
+            >
               Login
             </Typography>
             <form onSubmit={onSubmit}>
@@ -64,8 +103,8 @@ const Login = ({ setIsAuthenticated }) => {
                   id="username"
                   name="username"
                   label="Username"
-                  value={formFields[0].username}
-                  onChange={(event) => handleInputChange(0, event)}
+                  value={formFields.username}
+                  onChange={handleInputChange}
                   required
                 />
               </Box>
@@ -76,8 +115,8 @@ const Login = ({ setIsAuthenticated }) => {
                   name="password"
                   label="Password"
                   type="password"
-                  value={formFields[0].password}
-                  onChange={(event) => handleInputChange(0, event)}
+                  value={formFields.password}
+                  onChange={handleInputChange}
                   required
                 />
               </Box>
@@ -85,14 +124,26 @@ const Login = ({ setIsAuthenticated }) => {
                 <Button variant="contained" color="primary" type="submit">
                   Login
                 </Button>
+                <Box display="inline-block" width={10} />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleTestLogin}
+                >
+                  Test Login
+                </Button>
               </Box>
             </form>
             <Box mt={2} textAlign="center">
-
-                ?Don't have an account
-                <Typography>                <MuiLink component="button" onClick={() => navigate('/register')}>
+              Don't have an account?
+              <Typography>
+                <MuiLink
+                  component="button"
+                  onClick={() => navigate("/register")}
+                >
                   Register
-                </MuiLink><br/>
+                </MuiLink>
+                <br />
               </Typography>
             </Box>
           </CardContent>

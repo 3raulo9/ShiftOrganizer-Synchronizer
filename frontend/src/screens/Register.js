@@ -13,13 +13,15 @@ import {
 } from '@mui/material';
 
 const Register = ({ setIsAuthenticated }) => {
-  const [formFields, setFormFields] = useState([{ username: '', password: '' }]);
+  const [formFields, setFormFields] = useState({ username: '', password: '' });
   const navigate = useNavigate();
 
-  const handleInputChange = (index, event) => {
-    const values = [...formFields];
-    values[index][event.target.name] = event.target.value;
-    setFormFields(values);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormFields(prevFields => ({
+      ...prevFields,
+      [name]: value
+    }));
   };
 
   const generateRandomString = (length) => {
@@ -62,7 +64,7 @@ const Register = ({ setIsAuthenticated }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('http://localhost:5000/register', formFields[0], {
+      await axios.post('http://localhost:5000/register', formFields, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -100,8 +102,8 @@ const Register = ({ setIsAuthenticated }) => {
                   id="username"
                   name="username"
                   label="Username"
-                  value={formFields[0].username}
-                  onChange={(event) => handleInputChange(0, event)}
+                  value={formFields.username}
+                  onChange={handleInputChange}
                   required
                 />
               </Box>
@@ -112,16 +114,16 @@ const Register = ({ setIsAuthenticated }) => {
                   name="password"
                   label="Password"
                   type="password"
-                  value={formFields[0].password}
-                  onChange={(event) => handleInputChange(0, event)}
+                  value={formFields.password}
+                  onChange={handleInputChange}
                   required
                 />
               </Box>
-              <Box textAlign="center">
-                <Button variant="contained" color="primary" type="submit">
+              <Box textAlign="center" mb={2}>
+                <Button variant="contained" color="primary" type="submit" >
                   Register
                 </Button>
-                <Button variant="contained" color="secondary" onClick={createTestAccount} style={{ marginLeft: '10px' }}>
+                <Button variant="contained"  style={{ marginRight: '20px' }}color="secondary">
                   Create Test Account
                 </Button>
               </Box>

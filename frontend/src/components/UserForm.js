@@ -12,7 +12,6 @@ import {
   Slide,
   Grow,
   Fab,
-  Icon,
   Link
 } from '@mui/material';
 import { Add, Delete, Logout } from '@mui/icons-material';
@@ -21,7 +20,7 @@ import '../styles/UserForm.css';
 import '../styles/App.css';
 import '../styles/Animations.css';  // Add your animations CSS here
 
-const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
+const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading, handleTest }) => {
   const [formFields, setFormFields] = useState([{ company_id: '', username: '', password: '' }]);
   const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
@@ -155,6 +154,15 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading }) => {
                 >
                   Submit
                   <Add  />
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={handleTest}
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                >
+                  Test
+                  <Add />
                 </Button>
                 <Link
                   component="button"
