@@ -38,14 +38,14 @@ const Register = ({ setIsAuthenticated }) => {
     const randomPassword = generateRandomString(12);
     try {
       // Register the test account
-      await axios.post('http://localhost:5000/register', { username: randomUsername, password: randomPassword, is_test_account: true }, {
+      await axios.post('https://shiftorganizer-synchronizer.onrender.com/register', { username: randomUsername, password: randomPassword, is_test_account: true }, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
 
       // Log in the test account
-      const response = await axios.post('http://localhost:5000/login', { username: randomUsername, password: randomPassword }, {
+      const response = await axios.post('https://shiftorganizer-synchronizer.onrender.com/login', { username: randomUsername, password: randomPassword }, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -64,7 +64,7 @@ const Register = ({ setIsAuthenticated }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('http://localhost:5000/register', formFields, {
+      await axios.post('https://shiftorganizer-synchronizer.onrender.com/register', formFields, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -123,7 +123,7 @@ const Register = ({ setIsAuthenticated }) => {
                 <Button variant="contained" color="primary" type="submit" >
                   Register
                 </Button>
-                <Button variant="contained"  style={{ marginRight: '20px' }}color="secondary">
+                <Button variant="contained" onClick={createTestAccount} style={{ marginRight: '20px' }} color="secondary">
                   Create Test Account
                 </Button>
               </Box>

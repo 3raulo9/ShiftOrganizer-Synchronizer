@@ -28,7 +28,7 @@ const Login = ({ setIsAuthenticated }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/login",
+        "https://shiftorganizer-synchronizer.onrender.com/login",
         formFields,
         {
           headers: {
@@ -49,7 +49,7 @@ const Login = ({ setIsAuthenticated }) => {
     const testCredentials = { username: "ra12", password: "ra12" };
     try {
       const response = await axios.post(
-        "http://localhost:5000/login",
+        "https://shiftorganizer-synchronizer.onrender.com/login",
         testCredentials,
         {
           headers: {
