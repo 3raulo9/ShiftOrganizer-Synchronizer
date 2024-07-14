@@ -16,4 +16,17 @@
     color: #343a40;
     text-decoration: none;
   }
+  .footer-icon {
+    font-size: 20px;
+    margin-left: 20px;
+    color: #000; /* Change color as needed */
+  }
   
+  .footer p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-space {
+    margin-left: 20px; /* Adjust the space as needed */
+  }
