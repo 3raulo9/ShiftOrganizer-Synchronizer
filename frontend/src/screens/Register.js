@@ -38,14 +38,14 @@ const Register = ({ setIsAuthenticated }) => {
     const randomPassword = generateRandomString(12);
     try {
       // Register the test account
-      await axios.post('https://shiftorganizer-synchronizer.onrender.com/register', { username: randomUsername, password: randomPassword, is_test_account: true }, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/register`, { username: randomUsername, password: randomPassword, is_test_account: true }, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
 
       // Log in the test account
-      const response = await axios.post('https://shiftorganizer-synchronizer.onrender.com/login', { username: randomUsername, password: randomPassword }, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, { username: randomUsername, password: randomPassword }, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -64,7 +64,7 @@ const Register = ({ setIsAuthenticated }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('https://shiftorganizer-synchronizer.onrender.com/register', formFields, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/register`, formFields, {
         headers: {
           'Content-Type': 'application/json'
         }

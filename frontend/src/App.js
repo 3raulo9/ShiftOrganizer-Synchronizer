@@ -32,7 +32,7 @@ function App() {
 
   const handleSubmit = async (data) => {
     try {
-      const response = await axios.post('https://shiftorganizer-synchronizer.onrender.com/display_shift_data', data, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/display_shift_data`, data, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -47,7 +47,7 @@ function App() {
   const handleTest = async (data) => {
     setLoading(true);
     try {
-      const response = await axios.post('https://shiftorganizer-synchronizer.onrender.com/display_shift_data_test', {}, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/display_shift_data_test`, {}, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
