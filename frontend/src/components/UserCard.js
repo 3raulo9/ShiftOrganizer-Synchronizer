@@ -7,6 +7,7 @@ const UserCard = ({ user }) => {
       <h2>{user.user_name} - {user.company_name}</h2>
       <div dangerouslySetInnerHTML={{ __html: user.shift_data_of_the_current_week }} />
       <div dangerouslySetInnerHTML={{ __html: user.shift_data }} />
+      
     </div>
   );
 };

@@ -1,6 +1,6 @@
 /* Existing styles */
 .container {
-  padding: 20px;
+  padding: 10px;
 }
 
 html, body, #root {
@@ -14,13 +14,13 @@ html, body, #root {
   min-height: 100vh;
 }
 
-.content {
+.content-wrap {
   flex: 1;
-  background-color: #d9d7d7;
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%; /* Ensure the content wrap takes the full width */
+  background-color: #d9d7d7;
 }
 
 .user-cards {

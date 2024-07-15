@@ -18,7 +18,7 @@ import { Add, Delete, Logout } from '@mui/icons-material';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import '../styles/UserForm.css';
 import '../styles/App.css';
-import '../styles/Animations.css';  // Add your animations CSS here
+import '../styles/Animations.css';
 
 const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading, handleTest }) => {
   const [formFields, setFormFields] = useState([{ company_id: '', username: '', password: '' }]);
@@ -68,16 +68,16 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading, handleTest 
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="sm">
       <Slide direction="down" in={true} mountOnEnter unmountOnExit>
-        <Box sx={{ textAlign: 'center', mb: 4, mt: 4 }}>
-          <Typography variant="h2" component="h1" gutterBottom>
+        <Box sx={{ textAlign: 'center', mb: 2, mt: 2 }}>
+          <Typography variant="h4" component="h1" gutterBottom>
             Enter your users
           </Typography>
         </Box>
       </Slide>
       <Grow in={true}>
-        <Card sx={{ p: 2, backdropFilter: 'blur(30px)', background: 'rgba(255, 255, 255, 0.8)' }}>
+        <Card sx={{ p: 2, backdropFilter: 'blur(20px)', background: 'rgba(255, 255, 255, 0.8)' }}>
           <CardContent>
             <form onSubmit={onSubmit}>
               <Box display="flex" flexDirection={formFields.length > 1 || isDeleting ? "row" : "column"} flexWrap="wrap" justifyContent="center">
@@ -98,7 +98,8 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading, handleTest 
                           value={field.company_id}
                           onChange={(event) => handleInputChange(index, event)}
                           required
-                          sx={{ mb: 2 }}
+                          size="small"
+                          sx={{ mb: 1 }}
                         />
                         <TextField
                           fullWidth
@@ -108,7 +109,8 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading, handleTest 
                           value={field.username}
                           onChange={(event) => handleInputChange(index, event)}
                           required
-                          sx={{ mb: 2 }}
+                          size="small"
+                          sx={{ mb: 1 }}
                         />
                         <TextField
                           fullWidth
@@ -119,7 +121,8 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading, handleTest 
                           value={field.password}
                           onChange={(event) => handleInputChange(index, event)}
                           required
-                          sx={{ mb: 2 }}
+                          size="small"
+                          sx={{ mb: 1 }}
                         />
                         {index !== 0 && (
                           <Box textAlign="right">
@@ -127,7 +130,7 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading, handleTest 
                               color="error"
                               onClick={() => handleRemoveFields(index)}
                             >
-                              <Delete />
+                              <Delete fontSize="small" />
                             </IconButton>
                           </Box>
                         )}
@@ -136,42 +139,45 @@ const UserForm = ({ numUsers, setNumUsers, handleSubmit, setLoading, handleTest 
                   ))}
                 </TransitionGroup>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
                 <Fab
                   variant="extended"
                   color="success"
                   onClick={handleAddFields}
+                  size="small"
                   sx={{ display: 'flex', alignItems: 'center' }}
                 >
                   Add User
-                  <Add/>
+                  <Add fontSize="small" />
                 </Fab>
                 <Button
                   variant="outlined"
                   color="primary"
                   type="submit"
+                  size="small"
                   sx={{ display: 'flex', alignItems: 'center' }}
                 >
                   Submit
-                  <Add  />
+                  <Add fontSize="small" />
                 </Button>
                 <Button
                   variant="outlined"
                   color="secondary"
                   onClick={handleTest}
+                  size="small"
                   sx={{ display: 'flex', alignItems: 'center' }}
                 >
                   Test
-                  <Add />
+                  <Add fontSize="small" />
                 </Button>
                 <Link
                   component="button"
                   variant="body2"
                   onClick={handleLogout}
-                  sx={{ display: 'flex', alignItems: 'center', color: 'red' }}
+                  sx={{ display: 'flex', alignItems: 'center', color: 'red', fontSize: '0.875rem' }}
                 >
                   Logout
-                  <Logout />
+                  <Logout fontSize="small" />
                 </Link>
               </Box>
             </form>

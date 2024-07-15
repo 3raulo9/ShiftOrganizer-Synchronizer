@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UserForm from '../components/UserForm';
 import UserCard from '../components/UserCard';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import '../styles/Home.css';
 
 const Home = ({ handleSubmit, handleTest, userData, numUsers, setNumUsers, setLoading }) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setIsDrawerOpen(open);
+  };
+
   return (
     <div className="home">
       <div className="content">
@@ -14,11 +27,37 @@ const Home = ({ handleSubmit, handleTest, userData, numUsers, setNumUsers, setLo
           setLoading={setLoading} 
           handleTest={handleTest}
         />
-        <div className="user-cards">
-          {userData.map((user, index) => (
-            <UserCard key={index} user={user} />
-          ))}
-        </div>
+        {userData.length > 0 && (
+          <IconButton 
+            onClick={toggleDrawer(true)} 
+            className="drawer-toggle-button"
+            style={{ position: 'fixed', right: 0, top: '50%', transform: 'translateY(-50%)', zIndex: 1000 }}
+          >
+            <ArrowForwardIosIcon fontSize="large" />
+          </IconButton>
+        )}
+        <Drawer
+          anchor="right"
+          open={isDrawerOpen}
+          onClose={toggleDrawer(false)}
+          PaperProps={{ style: { width: '900px' } }} // Increase the width to twice the original size
+        >
+          <div
+            role="presentation"
+            onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}
+            style={{ padding: 16 }}
+          >
+            <IconButton onClick={toggleDrawer(false)} style={{ marginBottom: 16 }}>
+              <CloseIcon />
+            </IconButton>
+            <div className="user-cards">
+              {userData.map((user, index) => (
+                <UserCard key={index} user={user} />
+              ))}
+            </div>
+          </div>
+        </Drawer>
       </div>
     </div>
   );
