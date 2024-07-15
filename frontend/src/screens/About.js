@@ -33,20 +33,7 @@ const About = () => {
           </Typography>
         </Box>
       </main>
-      <footer>
-        <Grid container spacing={2} justifyContent="space-between" alignItems="center" sx={{ mt: 4, pt: 2, borderTop: '1px solid #e0e0e0' }}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="body2" color="textSecondary">
-              ShiftOrganizer Synchronizer 2024 unofficial
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4} container justifyContent="center">
-            <Link href="/" underline="none" color="inherit">
-              <svg className="bi me-2" width="40" height="32"><use xlinkHref="#bootstrap"></use></svg>
-            </Link>
-          </Grid>
-        </Grid>
-      </footer>
+
     </Container>
   );
 };

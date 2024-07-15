@@ -1,9 +1,124 @@
 .user-card {
-  /* Your existing styles */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.shift-data-container {
+.user-card h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333333;
+}
+
+.panel {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.panel-heading {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 15px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.panel-title {
+  font-size: 18px;
+  margin: 0;
+}
+
+.panel-success .panel-heading {
+  background-color: #dff0d8;
+}
+
+.panel-info .panel-heading {
+  background-color: #d9edf7;
+}
+
+.ng-binding {
+  color: #333;
+}
+
+.ng-scope {
+  font-size: 14px;
+}
+
+.visible-xs-block {
+  margin-bottom: 10px;
+}
+
+.visible-xs-block h4, .visible-xs-block h5 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.text-primary {
+  color: #337ab7;
+}
+
+.row {
   display: flex;
-  flex-direction: column;
-  gap: 10px; /* Adjust the gap as needed */
+  justify-content: space-between;
+}
+
+.col-xs-4, .col-xs-3, .col-xs-1, .col-sm-1 {
+  flex: 1;
+  padding: 5px;
+}
+
+.home-weekdays h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.seven-cols .col-sm-1 {
+  width: 14.28%;
+  text-align: center;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+
+.alert {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.alert-warning .close {
+  color: #8a6d3b;
+}
+
+.close {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+.close:hover, .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
 }

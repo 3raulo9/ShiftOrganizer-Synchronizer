@@ -1,6 +1,9 @@
 .container_about {
-  padding: 150px;
-  background-color: rgb(193, 193, 193);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84vh;
+  transition: opacity 1s ease-in-out;
 }
 
 h1 {
