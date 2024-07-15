@@ -226,7 +226,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 84vh;
   transition: opacity 1s ease-in-out;
 }
 

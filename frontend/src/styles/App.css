@@ -21,6 +21,7 @@ html, body, #root {
   align-items: center;
   width: 100%; /* Ensure the content wrap takes the full width */
   background-color: #d9d7d7;
+
 }
 
 .user-cards {
