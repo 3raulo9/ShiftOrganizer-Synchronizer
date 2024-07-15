@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Header.css";
 
@@ -6,7 +6,7 @@ const Header = () => {
   const [showHeader, setShowHeader] = useState(true);
   let lastScrollY = window.scrollY;
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     if (currentScrollY <= 0 || currentScrollY < lastScrollY) {
       setShowHeader(true);
@@ -14,14 +14,14 @@ const Header = () => {
       setShowHeader(false);
     }
     lastScrollY = currentScrollY;
-  };
+  }, [lastScrollY]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
 
   return (
     <nav
