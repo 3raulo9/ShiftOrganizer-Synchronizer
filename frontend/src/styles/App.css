@@ -126,7 +126,7 @@ html, body, #root {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 84vh;
+  height: 85vh;
   transition: opacity 1s ease-in-out;
 }
 
@@ -135,9 +135,6 @@ html, body, #root {
     padding: 10px; /* Adjust padding for mobile view */
   }
 
-  .home {
-    padding: 10px;
-  }
 
   .footer {
     flex-direction: column;

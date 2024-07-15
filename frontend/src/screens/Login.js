@@ -72,7 +72,7 @@ const Login = ({ setIsAuthenticated }) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="100vh"
+        height="85vh"
         style={{
           backgroundImage:
             "url('https://www.shiftorganizer.com/wp-content/uploads/2017/10/Shift_dark.jpg')",
@@ -97,7 +97,7 @@ const Login = ({ setIsAuthenticated }) => {
               Login
             </Typography>
             <form onSubmit={onSubmit}>
-              <Box mb={2}>
+              <Box mb={3}>
                 <TextField
                   fullWidth
                   id="username"

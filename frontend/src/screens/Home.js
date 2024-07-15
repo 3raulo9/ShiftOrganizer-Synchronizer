@@ -77,7 +77,7 @@ const Home = ({ handleSubmit, handleTest, userData, numUsers, setNumUsers, setLo
           anchor="right"
           open={isDrawerOpen}
           onClose={toggleDrawer(false)}
-          PaperProps={{ style: { width: '1300px' } }} // Set the width to desired size
+          PaperProps={{ style: { width: '90%', maxWidth: '1300px' } }} // Set the width to desired size
         >
           <div
             role="presentation"

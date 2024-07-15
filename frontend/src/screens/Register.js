@@ -83,7 +83,7 @@ const Register = ({ setIsAuthenticated }) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="100vh"
+        height="85vh"
         style={{
           backgroundImage: "url('https://www.shiftorganizer.com/wp-content/uploads/2017/10/Shift_dark.jpg')",
           backgroundSize: 'cover',
@@ -123,6 +123,8 @@ const Register = ({ setIsAuthenticated }) => {
                 <Button variant="contained" color="primary" type="submit" >
                   Register
                 </Button>
+                <Box display="inline-block" width={10} />
+
                 <Button variant="contained" onClick={createTestAccount} style={{ marginRight: '20px' }} color="secondary">
                   Create Test Account
                 </Button>
@@ -131,7 +133,7 @@ const Register = ({ setIsAuthenticated }) => {
             <Box mt={2} textAlign="center">
               <Typography>
 
-                ?Have an account<br/>
+                Have an account?<br/>
                 <MuiLink component="button" onClick={() => navigate('/login')}>
                   Login
                 </MuiLink>
