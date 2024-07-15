@@ -1,32 +1,50 @@
 .footer {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-top: 1px solid #e9ecef;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row; /* Ensure flex direction is row for larger screens */
+}
 
-  }
-  
-  .footer p {
-    margin: 0;
-  }
-  
-  .footer a {
-    color: #343a40;
-    text-decoration: none;
-  }
-  .footer-icon {
-    font-size: 20px;
-    margin-left: 20px;
-    color: #000; /* Change color as needed */
-  }
-  
-  .footer p {
-    display: flex;
+.footer p {
+  margin: 0;
+}
+
+.footer a {
+  color: #343a40;
+  text-decoration: none;
+}
+
+.footer-icon {
+  font-size: 24px; /* Increased font size for larger screens */
+  margin-left: 20px;
+  color: #000; /* Change color as needed */
+}
+
+.footer p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-space {
+  margin-left: 20px; /* Adjust the space as needed */
+}
+
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column; /* Stack elements vertically on smaller screens */
     align-items: center;
+  }
+
+  .footer p {
     justify-content: center;
   }
+
   .icon-space {
-    margin-left: 20px; /* Adjust the space as needed */
+    margin-left: 0; /* Reset margin for icons on smaller screens */
+    margin-top: 10px; /* Add some margin-top to separate icons */
   }
+}

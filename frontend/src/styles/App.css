@@ -21,7 +21,6 @@ html, body, #root {
   align-items: center;
   width: 100%; /* Ensure the content wrap takes the full width */
   background-color: #d9d7d7;
-
 }
 
 .user-cards {
@@ -33,15 +32,16 @@ html, body, #root {
 .input-container {
   position: relative;
   margin: 20px auto;
-  width: 450px; /* Increased the width */
+  width: 100%; /* Make input container responsive */
+  max-width: 500px; /* Increased max-width for larger screens */
 }
 
 .input-container input[type="text"], .input-container input[type="password"] {
-  font-size: 15px; /* Increased the font size */
+  font-size: 18px; /* Increased the font size for larger screens */
   width: 100%;
   border: none;
   border-bottom: 2px solid #ccc;
-  padding: 10px 0; /* Increased the padding */
+  padding: 12px 0; /* Increased padding */
   background-color: transparent;
   outline: none;
 }
@@ -53,7 +53,7 @@ html, body, #root {
   color: #ccc;
   transition: all 0.3s ease;
   pointer-events: none;
-  font-size: 16px; /* Increased the font size */
+  font-size: 18px; /* Increased the font size */
 }
 
 .input-container input[type="text"]:focus ~ .label,
@@ -61,7 +61,7 @@ html, body, #root {
 .input-container input[type="password"]:focus ~ .label,
 .input-container input[type="password"]:valid ~ .label {
   top: -25px; /* Adjusted position */
-  font-size: 16px;
+  font-size: 18px;
   color: #333;
 }
 
@@ -120,4 +120,31 @@ html, body, #root {
 .footer a {
   color: #343a40;
   text-decoration: none;
+}
+
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84vh;
+  transition: opacity 1s ease-in-out;
+}
+
+@media (max-width: 600px) {
+  .content-wrap {
+    padding: 10px; /* Adjust padding for mobile view */
+  }
+
+  .home {
+    padding: 10px;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer p {
+    justify-content: center;
+  }
 }

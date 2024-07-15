@@ -44,6 +44,16 @@
   max-width: 80%;
 }
 
+/* Additional message */
+.additional-message {
+  margin-top: 20px;
+  font-size: 1.2em; /* Font size for the additional message */
+  font-weight: bold;
+  color: red;
+  text-align: center;
+  max-width: 80%;
+}
+
 /* Animations */
 @keyframes ringA {
   from, 4% {
@@ -222,13 +232,7 @@
 }
 
 /* Home component styles */
-.home {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 84vh;
-  transition: opacity 1s ease-in-out;
-}
+
 
 .content {
   opacity: 0;

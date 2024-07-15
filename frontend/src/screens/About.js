@@ -1,11 +1,10 @@
 import React from 'react';
-import { Container, Typography, Box, List, ListItem, ListItemText, AppBar, Toolbar, Link, Grid } from '@mui/material';
+import { Container, Typography, Box, List, ListItem, ListItemText } from '@mui/material';
 import '../styles/About.css';
 
 const About = () => {
   return (
-    <Container maxWidth="md" className="container_about">
-
+    <Container maxWidth="md" className="home">
       <main>
         <Box sx={{ mt: 4 }}>
           <Typography variant="h3" component="h1" gutterBottom>
@@ -33,7 +32,6 @@ const About = () => {
           </Typography>
         </Box>
       </main>
-
     </Container>
   );
 };

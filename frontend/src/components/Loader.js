@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Fade from '@mui/material/Fade';
+import Typewriter from 'typewriter-effect';
 import '../styles/Loader.css';
 
 const baseFacts = [
@@ -21,7 +23,6 @@ const baseFacts = [
   "As part of his ongoing education, Raul frequently explores new programming frameworks and libraries to stay updated in the tech industry.",
   "Raul's curiosity about different cultures and languages is reflected in his diverse language portfolio and programming projects.",
   "That app was styled using MUI, it is a library of React components that follow Google's Material Design, helping developers quickly build stylish and consistent user interfaces."
-
 ];
 
 const addPrefix = (facts) => facts.map(fact => `About the creator of that website: ${fact}`);
@@ -29,6 +30,7 @@ const addPrefix = (facts) => facts.map(fact => `About the creator of that websit
 const Loader = () => {
   const [randomFact, setRandomFact] = useState('');
   const [fade, setFade] = useState(true);
+  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     const facts = addPrefix(baseFacts);
@@ -42,18 +44,42 @@ const Loader = () => {
       }, 1000); // Duration of the fade-out effect
     }, 8000); // Switch facts every 8 seconds
 
-    return () => clearInterval(interval);
+    const messageTimeout = setTimeout(() => {
+      setShowMessage(true);
+    }, 10000); // Show message after 10 seconds
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(messageTimeout);
+    };
   }, []);
 
   return (
     <div className="loader-container">
       <svg viewBox="0 0 240 240" height="240" width="240" className="loader">
-        <circle strokeLinecap="round" strokeDashoffset="-330" strokeDasharray="0 660" strokeWidth="20" stroke="#000" fill="none" r="105" cy="120" cx="120" className="loader-ring loader-ring-a"></circle>
-        <circle strokeLinecap="round" strokeDashoffset="-110" strokeDasharray="0 220" strokeWidth="20" stroke="#000" fill="none" r="35" cy="120" cx="120" className="loader-ring loader-ring-b"></circle>
-        <circle strokeLinecap="round" strokeDasharray="0 440" strokeWidth="20" stroke="#000" fill="none" r="70" cy="120" cx="85" className="loader-ring loader-ring-c"></circle>
-        <circle strokeLinecap="round" strokeDasharray="0 440" strokeWidth="20" stroke="#000" fill="none" r="70" cy="120" cx="155" className="loader-ring loader-ring-d"></circle>
+        <circle strokeLinecap="round" strokeDashoffset="-330" strokeDasharray="0 660" strokeWidth="20" stroke="#0077be" fill="none" r="105" cy="120" cx="120" className="loader-ring loader-ring-a"></circle>
+        <circle strokeLinecap="round" strokeDashoffset="-110" strokeDasharray="0 220" strokeWidth="20" stroke="#00bfff" fill="none" r="35" cy="120" cx="120" className="loader-ring loader-ring-b"></circle>
+        <circle strokeLinecap="round" strokeDasharray="0 440" strokeWidth="20" stroke="#0077be" fill="none" r="70" cy="120" cx="85" className="loader-ring loader-ring-c"></circle>
+        <circle strokeLinecap="round" strokeDasharray="0 440" strokeWidth="20" stroke="#00bfff" fill="none" r="70" cy="120" cx="155" className="loader-ring loader-ring-d"></circle>
       </svg>
       <div className={`fun-fact ${fade ? 'fade-in' : 'fade-out'}`}>{randomFact}</div>
+      <Fade in={showMessage} timeout={1000}>
+        <div className="additional-message">
+          {showMessage && (
+            <Typewriter
+              options={{
+                autoStart: true,
+                loop: false,
+                delay: 56,
+              }}
+              onInit={(typewriter) => {
+                typewriter.typeString('Currently working on retrieving real data from shiftorganizer, it will take on average 1 minute')
+                  .start();
+              }}
+            />
+          )}
+        </div>
+      </Fade>
     </div>
   );
 };
