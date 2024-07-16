@@ -19,6 +19,7 @@ import threading
 from threading import Thread
 from dotenv import load_dotenv
 import os
+import requests
 
 # Load environment variables from .env file
 load_dotenv()
@@ -27,6 +28,12 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your_jwt_secret_key")
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_size": 10,
+    "max_overflow": 20,
+    "pool_timeout": 30,
+    "pool_recycle": 1800,
+}
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
@@ -197,6 +204,11 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/warm_up", methods=["GET"])
+def warm_up():
+    return jsonify(message="Warm-up request successful"), 200
+
+
 def delete_old_test_accounts():
     while True:
         with app.app_context():
@@ -210,7 +222,21 @@ def delete_old_test_accounts():
         time.sleep(3600)  # Run this check every hour
 
 
-# Start the background task
+def send_warm_up_request():
+    while True:
+        try:
+            response = requests.get("http://localhost:5000/warm_up")
+            if response.status_code == 200:
+                app.logger.info("Warm-up request successful")
+            else:
+                app.logger.error(f"Warm-up request failed with status code {response.status_code}")
+        except Exception as e:
+            app.logger.error(f"Warm-up request failed: {e}")
+        time.sleep(600)  # Wait for 10 minutes before sending the next request
+
+
+# Start the background tasks
 if __name__ == "__main__":
     Thread(target=delete_old_test_accounts, daemon=True).start()
+    Thread(target=send_warm_up_request, daemon=True).start()
     app.run(debug=True, port=5000)
