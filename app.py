@@ -232,7 +232,7 @@ def send_warm_up_request():
                 app.logger.error(f"Warm-up request failed with status code {response.status_code}")
         except Exception as e:
             app.logger.error(f"Warm-up request failed: {e}")
-        time.sleep(600)  # Wait for 10 minutes before sending the next request
+        time.sleep(60)  # Wait for 1 minute before sending the next request
 
 
 # Start the background tasks
