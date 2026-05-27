@@ -45,27 +45,6 @@ const Login = ({ setIsAuthenticated }) => {
     }
   };
 
-  const handleTestLogin = async () => {
-    const testCredentials = { username: "ra12", password: "ra12" };
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/login`,
-        testCredentials,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      localStorage.setItem("token", response.data.access_token);
-      setIsAuthenticated(true);
-      navigate("/"); // Redirect to home page
-    } catch (error) {
-      console.error("Error logging in:", error);
-      alert("Test Login failed.");
-    }
-  };
-
   return (
     <Container maxWidth={false} style={{ padding: 0 }}>
       <Box
@@ -123,14 +102,6 @@ const Login = ({ setIsAuthenticated }) => {
               <Box textAlign="center">
                 <Button variant="contained" color="primary" type="submit">
                   Login
-                </Button>
-                <Box display="inline-block" width={10} />
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleTestLogin}
-                >
-                  Test Login
                 </Button>
               </Box>
             </form>
